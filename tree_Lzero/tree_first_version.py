@@ -70,7 +70,6 @@ def main ():
                 compa.append(int(bran_cp))#total-every-cp
                 bran_info.append([bran_name,bran_cp,bran_volength,bran_level,bran_parent])
         compar=sorted(compa,key=float)
-        
         if int(local) < 3:
             print("variable less than need")
             sys.exit(1)
@@ -102,14 +101,7 @@ def main ():
                 bran_local_in_y=[]
                 for num in range(1,cp+1):
                     bran_ex_cp_num.append(bran[i+12+num])
-                    #print(i+12+num)
                 for ws in range(i+12+cp,(i+12+cp-local),-1):
-                    #print(ws)
-                    #print("I   ")
-                    #print(i)
-                    #print("CP   ")
-                    #print(cp)
-                    #print(num)
                     z=int(bran[ws].split()[0])
                     x=int(bran[ws].split()[1])
                     y=int(bran[ws].split()[2])
@@ -153,8 +145,6 @@ def main ():
             a="ID = "
             a=a+str(int(child))+("\n")
             XD.append(a)
-            #d.write(a)
-            #d.write(": ")
             t=0
             #裡面調用list append
             ### need _ 修改按照長度順序(將數據點也一併輸出)
@@ -196,7 +186,6 @@ def main ():
                     bran_local_ch_y=[]
                     cp_num=int(bran[t+2].split()[2])
                     for ww in range(t+13+cp_num,(t+13+cp_num-local),-1):
-                        #print(ww)
                         z=int(bran[ww].split()[0])
                         x=int(bran[ww].split()[1])
                         y=int(bran[ww].split()[2])
@@ -207,26 +196,21 @@ def main ():
         cof_init=[]
         for leng in range(len(bran_local_in)) :
             ini=bran_local_in[leng]
-            #print(ini)
             for lengt in range(len(ini)) :
-                #init=np.array(ini[lengt])
                 z=np.array(ini[0])
                 x=np.array(ini[1])
                 y=np.array(ini[2])
-            cof_ini=OLS.main(z,x,y)
+            cof_ini=OLS.main(x,y,z)
             cof_init.append(cof_ini)
         cof_out=[]
         
         for leng in range(len(bran_local_out)) :
             ini=bran_local_out[leng]
             for lengt in range(len(ini)) :
-                #init=np.array(ini[lengt])
                 z=np.array(ini[0])
                 x=np.array(ini[1])
                 y=np.array(ini[2])
-                #print(z,x,y)
-                #print(cof_ini)
-            cof_ini=OLS.main(z,x,y)
+            cof_ini=OLS.main(x,y,z)
             q_br.put(cof_ini)
             cof_out.append([cof_ini])
         arc=[]
@@ -244,8 +228,6 @@ def main ():
                 tr=q_br.get()
                 for ar in range(vr+1,len(cof_out)):
                     coff=((cof_out[ar])[:])
-                    #print(coff[0])
-                    #print("FF")
                     theta=np.arccos((np.dot(tr,coff[0])))
                     if theta > (math.pi/2) :
                         theta=math.pi-theta
@@ -253,12 +235,6 @@ def main ():
             q_br.get()
             return
         bran_inner(tt,cof_out)            
-        #print(q_br.qsize())
-        #print(q_br.get())
-        #print(arc)
-        #print(cof_out)
-        #print(cof_init)
-        #print(bran_local_in)
         d.write("\n")
         d.write("level zero : ")
         d.write(str(level))
@@ -319,7 +295,6 @@ def main ():
             proce_ID.append(q.get())
         if proce_ID == [] :
             return proce_ID
-        #print(type(proce_ID[0]))#str
         return proce_ID
     def d_process_ad(proce_ID,infor,level,compa,local):
         braninfo=infor[0]
@@ -327,9 +302,6 @@ def main ():
         bran_info=[]
         bran_local_in=[]
         local
-        #print(compa)
-        #L=OLS.main(F1,F2,Label)#OLS.main() return normalized vector(z,x,y)
-        #print(L)
         for var in braninfo:
             if var.startswith('TreeExample',21):
                 bran_name = var.split()[0]
@@ -382,33 +354,22 @@ def main ():
                         BP_CHild_ID.append(bran[cp+17+i+bp+cha])
                     
                     for num in range(1,cp+1):
-                        #print(i+14+num)
                         bran_ex_cp_num.append(bran[i+14+num])
                     for ws in range(i+14+cp,(i+14+cp-local),-1):
-                        #print(ws)
-                        #print("I   ")
-                        #print(i)
-                        #print("CP   ")
-                        #print(cp)
                         z=int(bran[ws].split()[0])
-                        #print(z)
                         x=int(bran[ws].split()[1])
                         y=int(bran[ws].split()[2])
                         bran_local_in_z.append(z)
                         bran_local_in_x.append(x)
                         bran_local_in_y.append(y)
-
                     div=offspring(BP_CHild_ID)
                     bran_chi=[]
                     XD=[]
-                    #print(compa)
                     for i in range(len(div)-1, -1, -1):
                         child=div.pop(i)
                         a="ID = "
                         a=a+str(int(child))+("\n")
                         XD.append(a)
-                        #d.write(a)
-                        #d.write(": ")
                         t=0
                         ### need _ 修改按照長度順序(將數據點也一併輸出)
                         for var in bran:
@@ -423,10 +384,8 @@ def main ():
                                 XD.append(voxel_length)
                                 child_vlength=float(child_vlength)
                                 child_le.append(child_vlength)
-                        ###
                                 child_le=sorted(child_le,key=float,reverse=True)#finish sort
                     bran_local_in.append([bran_local_in_z,bran_local_in_y,bran_local_in_x])
-                    #print(bran_local_in)
                     bran_ex_vlength_new=float(bran_ex_vlength.split()[2])
                     if len(child_le) == 0 :
                         break
@@ -443,7 +402,6 @@ def main ():
                         d.write("\n")
                         d.write("to: ")
                         d.write("\n")
-                        #print(type(XD[1]))
                         for R in  child_le:
                             for dd in range(len(XD)) :
                                 if  XD[dd] == str(R):
@@ -454,7 +412,6 @@ def main ():
                                     bran_chi.append(XD[dd-3])
                                     d.write("\n")
                         bran_local_out=[]
-                        #print(bran_chi)
                         for r in bran_chi:
                             t=0
                             for var in bran:
@@ -464,13 +421,10 @@ def main ():
                                     bran_local_ch_x=[]
                                     bran_local_ch_y=[]
                                     cp_num=int(bran[t+2].split()[2])
-                                    #print(cp_num)
                                     for ww in range(t+12+cp_num,(t+12+cp_num-local),-1):
-                                        #print(ww)
                                         z=int(bran[ww].split()[0])
                                         x=int(bran[ww].split()[1])
                                         y=int(bran[ww].split()[2])
-                                        #print(z)
                                         bran_local_ch_z.append(z)
                                         bran_local_ch_x.append(x)
                                         bran_local_ch_y.append(y)
@@ -478,68 +432,48 @@ def main ():
                         cof_init=[]
                         for leng in range(len(bran_local_in)) :
                             init=bran_local_in[leng]
-                            #print(ini)
                             for lengt in range(len(init)) :
-                                #init=np.array(ini[lengt])
                                 z=np.array(init[0])
                                 x=np.array(init[1])
                                 y=np.array(init[2])
-                            cof_ini=OLS.main(z,x,y)
+                            cof_ini=OLS.main(x,y,z)
                             cof_init.append(cof_ini)
-                        #print(cof_init)
-                        #print(bran_local_out)
                         cof_out=[]
                         for leng in range(len(bran_local_out)) :
                             init=bran_local_out[leng]
                             for lengt in range(len(init)) :
-                                #init=np.array(ini[lengt])
                                 z=np.array(init[0])
                                 x=np.array(init[1])
                                 y=np.array(init[2])
-                                #print(z,x,y)
-                                #print(cof_ini)
-                            cof_ini=OLS.main(z,x,y)
+                            cof_ini=OLS.main(x,y,z)
                             q_br.put(cof_ini)
                             cof_out.append([cof_ini])
                         arc=[]
-                        #print(cof_init)
-                        #print(cof_out)
                         for leng in range(len(cof_init)) :
                             for lengt in range(len(cof_out)):
                                 coff=((cof_out[lengt])[:])
-                        #        print(coff[0])
-                        #        print(cof_init[leng])
                                 theta=np.arccos(np.dot(cof_init[leng],coff[0]))
                                 if theta > (math.pi/2) :
                                     theta=math.pi-theta
                                 arc.append(theta)
-                        #print(arc)
                         tt=q_br.qsize()
-                        #print(cof_out)
                         ##內積得後續的解(將裡面的計算)
                         def bran_inner(tt,cof_out) :
                             for vr in range(tt-1) :
                                 tr=q_br.get()
-                                #print(tr)
                                 for ar in range(vr+1,len(cof_out)):
                                     coff=((cof_out[ar])[:])
-                                    #print(coff[0])
-                                    #print("FF")
                                     theta=np.arccos((np.dot(tr,coff[0])))
                                     if theta > (math.pi/2) :
                                         theta=math.pi-theta
-                                    #print(theta)
-                                #os.system("pause")
                                     arc.append(theta)
                             q_br.get()
                             return
                         bran_inner(tt,cof_out)            
-                        #print(child_le)
                         d.write("\n")
                         d.write("level zero : ")
                         d.write(str(level))
                         d.write("\n")
-                        #print(len(length_ratio))
                         d.write("length_ratio :")
                         d.write(str(length_ratio))    
                         d.write("\n")
