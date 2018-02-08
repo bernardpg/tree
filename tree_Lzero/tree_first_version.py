@@ -296,12 +296,6 @@ def main ():
         d.write(str(arc))
         d.write("\n")
         d.write("==============")
-        d.write("\n")
-        d.write(str(bran_ex_ID))
-        d.write("\n")
-        for dd in bran_ex_cp_num:
-            d.write(str(dd))
-        d.write("==============")
         return child_le,BP_CHild_ID,bran_info,level,compa,local
 ###advance_process
 ##sorting 順序
@@ -603,14 +597,8 @@ def main ():
                         d.write(str(arc))
                         d.write("\n")
                         d.write("==============")
-                        d.write("\n")
-                        d.write(str(bran_ex_ID))
-                        d.write("\n")
-                        for dd in bran_ex_cp_num:
-                            d.write(str(dd))
-                        d.write("\n")
-                        d.write("==============")
                         ini.append([child_le,BP_CHild_ID,bran_info,level])
+                        sorting_ad(ini,q)
         # call iteration 
         proce_ID=d_process_a(q)  
         d_process_ad(proce_ID,infor,level,compa,local)        
